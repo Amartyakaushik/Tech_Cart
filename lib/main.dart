@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tech_cart/pages/home_page.dart';
 import 'package:tech_cart/pages/login_page.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tech_cart/utils/MyRoutes.dart';
 
 
 void main(){
@@ -20,10 +21,12 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.deepPurple,
           fontFamily: GoogleFonts.lato().fontFamily
       ),
+      // to remove the debug signature from top right corner
+      debugShowCheckedModeBanner: false,
       darkTheme:  ThemeData(
         brightness: Brightness.dark,
       ),
-      initialRoute: "/login",
+      initialRoute: MyRoutes.LogInRoute,
       routes: {
         "/" : (context) => HomePage(),
         "/login" : (context) => LoginPage(),
