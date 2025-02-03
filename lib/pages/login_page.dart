@@ -10,9 +10,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  @override
-    String name = "";
-    bool isChanged = false;
+  String name = "";
+  bool isChanged = false;
   Widget build(BuildContext context) {
     return Material(
       color: Colors.white,
