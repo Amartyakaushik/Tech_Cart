@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tech_cart/pages/home_page.dart';
 import 'package:tech_cart/pages/login_page.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:tech_cart/utils/MyRoutes.dart';
 import 'package:tech_cart/widget/themes.dart';
 

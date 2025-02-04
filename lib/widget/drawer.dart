@@ -28,7 +28,7 @@ class MyDrawer extends StatelessWidget {
                   CupertinoIcons.home,
                   color: Colors.black,),
               title: Text("Home",
-                    textScaleFactor: 1.2,
+                    textScaler:  TextScaler.linear(1.2),
                     style: TextStyle(color: Colors.black),),
             ),
             ListTile(
@@ -36,7 +36,7 @@ class MyDrawer extends StatelessWidget {
                 CupertinoIcons.profile_circled,
                 color: Colors.black,),
               title: Text("Profile",
-                textScaleFactor: 1.2,
+                textScaler: TextScaler.linear(1.2),
                 style: TextStyle(color: Colors.black),),
             ),
             ListTile(
@@ -44,7 +44,7 @@ class MyDrawer extends StatelessWidget {
                 CupertinoIcons.mail,
                 color: Colors.black,),
               title: Text("Email",
-                textScaleFactor: 1.2,
+                textScaler: TextScaler.linear(1.2),
                 style: TextStyle(color: Colors.black),),
             ),
           ],
