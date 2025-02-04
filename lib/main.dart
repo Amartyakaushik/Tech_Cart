@@ -3,6 +3,7 @@ import 'package:tech_cart/pages/home_page.dart';
 import 'package:tech_cart/pages/login_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tech_cart/utils/MyRoutes.dart';
+import 'package:tech_cart/widget/themes.dart';
 
 
 void main(){
@@ -17,19 +18,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       // home: HomePage(),
       themeMode: ThemeMode.light,
-      theme: ThemeData(
-          primarySwatch: Colors.deepPurple,
-          fontFamily: GoogleFonts.lato().fontFamily
-      ),
-      // to remove the debug signature from top right corner
-      debugShowCheckedModeBanner: false,
-      darkTheme:  ThemeData(
-        brightness: Brightness.dark,
-      ),
-      initialRoute: MyRoutes.logInRoute,
+      theme: MyTheme.lightTheme(context),
+      darkTheme: MyTheme.darkTheme(context),
+      debugShowCheckedModeBanner: false, // to remove the debug signature from top right corner
+      initialRoute: MyRoutes.homeRoute,
       routes: {
         "/" : (context) => HomePage(),
-        "/login" : (context) => LoginPage(),
+        MyRoutes.homeRoute : (context) => HomePage(),
+        MyRoutes.logInRoute : (context) => LoginPage(),
       },
     );
   }
