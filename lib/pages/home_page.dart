@@ -10,7 +10,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dummyList = List.generate(10, (index) => CatalogModel.items[0]);
-    String project = "Tech Cart";
+    // String project = "Tech Cart";
     return Scaffold(
       appBar: AppBar(
         // iconTheme: IconThemeData(color: Colors.white), // set icon color to white
