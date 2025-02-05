@@ -31,15 +31,45 @@ class _HomePageState extends State<HomePage> {
         title: Text("Tech Cart", style: TextStyle(color: Colors.white),),
         // backgroundColor: Colors.deepPurple,
       ),
-      body: (CatalogModel.items != null &&  CatalogModel.items!.isNotEmpty )? ListView.builder(  // first always check for null then check for empty condition other wise the ui will crash
-          itemCount: CatalogModel.items?.length,
-          // itemCount: dummyList.length,
-          itemBuilder: (context, index) =>
-              ItemWidget(
-                // item: dummyList[index],
-                item: CatalogModel.items![index]
-              ),
-          ) :Center(
+      body: (CatalogModel.items != null &&  CatalogModel.items!.isNotEmpty )?
+          GridView.builder(  // (Delegate,itemBuilder,itemCount)
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount( // it takes Delegate to ensure no of items in a row
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 16,),
+              itemBuilder: (context, index){  //(Grid Tile) it decides the contents
+                final item = CatalogModel.items![index];
+                  return Card(
+                    clipBehavior: Clip.antiAlias,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    child: GridTile( // (header, child, footer)
+                      header: Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: Colors.deepPurple,
+                        ),
+                        child: Text(
+                          item.name,
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                      footer: Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                        ),
+                        child: Text(
+                          item.desc,
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+
+                      child: Image.network(item.image),
+                    ),
+                  );
+                  },
+              itemCount: CatalogModel.items!.length,)
+       :Center(
         child: CircularProgressIndicator(),
       ),
       drawer: MyDrawer(),
@@ -47,7 +77,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void loadData() async{  // async used because await is used with async function only
-    await Future.delayed(Duration(seconds: 11));
+    await Future.delayed(Duration(seconds: 1));
     var catalogJson = await rootBundle.loadString("assets/files/catalog.json"); // await used because catalogJson returns Future<String>
     // print("JSON Loaded: $catalogJson"); // for debuggins
     final decodeData = jsonDecode(catalogJson);  // to decode the object in the json file
@@ -58,3 +88,13 @@ class _HomePageState extends State<HomePage> {
     setState(() {});
   }
 }
+
+// ListView.builder(  // first always check for null then check for empty condition other wise the ui will crash
+// itemCount: CatalogModel.items?.length,
+// // itemCount: dummyList.length,
+// itemBuilder: (context, index) =>
+// ItemWidget(
+// // item: dummyList[index],
+// item: CatalogModel.items![index]
+// ),
+// )

@@ -1,10 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tech_cart/models/catalog.dart';
 
 class ItemWidget extends StatelessWidget {
   final Item item;
-  const ItemWidget({super.key, required this.item});
+  const ItemWidget({super.key, required this.item});  // constructor where the need of item is mentioned
 
   @override
   Widget build(BuildContext context) {
