@@ -15,14 +15,13 @@ class ItemWidget extends StatelessWidget {
           child: ListTile(
             leading: Image.network(item.image),
             title: Text(item.name),
-            subtitle: Text(item.descrption),
+            subtitle: Text(item.desc),
             trailing: Text("\$${item.price}",
               textScaler: TextScaler.linear(1.5),
             style: TextStyle(fontWeight: FontWeight.bold),),
           ),
         ),
-    );
-    const Placeholder();
+    );const Placeholder();
   }
 }
 
