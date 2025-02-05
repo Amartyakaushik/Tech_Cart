@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:tech_cart/models/catalog.dart';
 import 'package:tech_cart/widget/drawer.dart';
 
-import '../widget/item_widget.dart';
+// import '../widget/item_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
