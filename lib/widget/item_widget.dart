@@ -21,7 +21,8 @@ class ItemWidget extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.bold),),
           ),
         ),
-    );const Placeholder();
+    );
   }
 }
 
+// const Placeholder();   was used outside padding rsn ?
