@@ -11,15 +11,15 @@ class HomeDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: MyTheme.creamColor,
+      backgroundColor: context.canvasColor,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: MyTheme.creamColor,
-        iconTheme: IconThemeData(color: Colors.black),
+        backgroundColor: Colors.transparent,
+        // iconTheme: IconThemeData(color: Colors.black),
       ),
       bottomNavigationBar:
       Container(
-        color: Colors.white,
+        color: context.cardColor,
         child: ButtonBar(
           alignment: MainAxisAlignment.spaceBetween,
           buttonPadding: EdgeInsets.zero,
@@ -29,7 +29,7 @@ class HomeDetailPage extends StatelessWidget {
               onPressed: (){},
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(
-                      MyTheme.darkBluishColor
+                      context.theme.colorScheme.primary
                   ),
                   shape: MaterialStateProperty.all(
                     StadiumBorder(),
@@ -45,17 +45,29 @@ class HomeDetailPage extends StatelessWidget {
           children: [
             Hero(
                 tag: Key(catalog.id.toString()),
-                child: Image.network(catalog.image).backgroundColor(MyTheme.creamColor).h32(context),
+                child: Container(
+                  color: context.canvasColor,
+                  // decoration: BoxDecoration(
+                    // color: context.canvasColor.withOpacity(0.9),
+                    // backgroundBlendMode:
+                  // ),
+                  child: Image.network(
+                    catalog.image,
+                  fit: BoxFit.cover,
+                  // color: Colors.white.withOpacity(0.9),
+                  // colorBlendMode: BlendMode.multiply,
+                  ).backgroundColor(context.canvasColor).h32(context),
+                ),// used multiply instead of darken to work for both theme mode
             ),
             Expanded(
                 child: VxArc(
                   arcType: VxArcType.convey, edge: VxEdge.top,
                     height: 30,
                     child: Container(
-                      width: context.screenWidth, color: Colors.white,
+                      width: context.screenWidth, color: context.cardColor,
                       child: Column(
                         children: [
-                          catalog.name.text.lg.color(MyTheme.darkBluishColor).bold.make(),
+                          catalog.name.text.lg.color(context.theme.colorScheme.secondary).bold.make(),
                           catalog.desc.text.textStyle(context.captionStyle).xl.make(),
                           10.heightBox,
                           "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into .".text.textStyle(context.captionStyle).make().p16(),

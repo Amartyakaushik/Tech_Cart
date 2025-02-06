@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
 
   void loadData() async{  // async used because await is used with async function only
     await Future.delayed(Duration(seconds: 1));
-    var catalogJson = await rootBundle.loadString("assets/files/catalog.json"); // await used because catalogJson returns Future<String>
+    var catalogJson = await rootBundle.loadString("assets/files/updated_catalog.json"); // await used because catalogJson returns Future<String>
     print("JSON Loaded: $catalogJson"); // for debuggins
     final decodeData = jsonDecode(catalogJson);  // to decode the object in the json file
     var productData = decodeData["products"];  // extract all the products
@@ -45,12 +45,13 @@ class _HomePageState extends State<HomePage> {
     // final dummyList = List.generate(10, (index) => CatalogModel.items[0]);
     // String project = "Tech Cart";
     return Scaffold(
-      backgroundColor: MyTheme.creamColor,
+      backgroundColor: context.canvasColor,
       // adding floating action button for the cart
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.pushNamed(context, MyRoutes.cartPage),
-        backgroundColor: MyTheme.darkBluishColor,
-        child: Icon(CupertinoIcons.cart, color: Colors.white,),  ),
+        backgroundColor: context.theme.colorScheme.primary,
+        child: Icon(CupertinoIcons.cart, color: Colors.white,),
+      ),
       body: SafeArea(
         child: Container(
           padding: Vx.m32,
