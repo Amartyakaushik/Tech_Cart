@@ -1,9 +1,11 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tech_cart/models/catalog.dart';
-import 'package:tech_cart/widget/drawer.dart';
+import 'package:tech_cart/utils/MyRoutes.dart';
+// import 'package:tech_cart/widget/drawer.dart';
 import 'package:tech_cart/widget/themes.dart';
 
 // import '../widget/item_widget.dart';
@@ -44,6 +46,11 @@ class _HomePageState extends State<HomePage> {
     // String project = "Tech Cart";
     return Scaffold(
       backgroundColor: MyTheme.creamColor,
+      // adding floating action button for the cart
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Navigator.pushNamed(context, MyRoutes.cartPage),
+        backgroundColor: MyTheme.darkBluishColor,
+        child: Icon(CupertinoIcons.cart, color: Colors.white,),  ),
       body: SafeArea(
         child: Container(
           padding: Vx.m32,

@@ -11,13 +11,15 @@ class HomeDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: MyTheme.creamColor,
+      backgroundColor: MyTheme.creamColor,
       appBar: AppBar(
+        elevation: 0,
+        backgroundColor: MyTheme.creamColor,
         iconTheme: IconThemeData(color: Colors.black),
-        backgroundColor: Colors.transparent,
       ),
       bottomNavigationBar:
       Container(
+        color: Colors.white,
         child: ButtonBar(
           alignment: MainAxisAlignment.spaceBetween,
           buttonPadding: EdgeInsets.zero,
@@ -35,15 +37,15 @@ class HomeDetailPage extends StatelessWidget {
               child: "Add to cart".text.color(Colors.white).make(),
             ).wh(150, 50)
           ],
-        ).pOnly(right: 8.0),
-      ).p(32),
+        ).p(32),
+      ),
       body: SafeArea(
         bottom: false,
         child: Column(
           children: [
             Hero(
                 tag: Key(catalog.id.toString()),
-                child: Image.network(catalog.image).h32(context),
+                child: Image.network(catalog.image).backgroundColor(MyTheme.creamColor).h32(context),
             ),
             Expanded(
                 child: VxArc(
@@ -56,6 +58,7 @@ class HomeDetailPage extends StatelessWidget {
                           catalog.name.text.lg.color(MyTheme.darkBluishColor).bold.make(),
                           catalog.desc.text.textStyle(context.captionStyle).xl.make(),
                           10.heightBox,
+                          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into .".text.textStyle(context.captionStyle).make().p16(),
                         ],
                       ).py64(),
                     )))
