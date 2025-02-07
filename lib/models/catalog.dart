@@ -1,14 +1,10 @@
 class CatalogModel{
   static List<Item>? items;
-    // Item(
-    //     id: 1,
-    //     name: "iPhone 12 Pro",
-    //     desc: "Apple iPhone 12th generation",
-    //     price: 999,
-    //     color: "#33505a",
-    //     image:
-    //     "https://rukminim2.flixcart.com/image/850/1000/xif0q/mobile/z/g/n/-original-imah28sqpattzfyp.jpeg?q=90&crop=false"
-    // )
+  
+  // method to get item by id
+  static Item? getById(int id) => items?.firstWhere((element) => element == id, orElse: null);
+  // method to get item by position
+  static Item? getByPosition(int pos) => items?[pos];
 
 }
 

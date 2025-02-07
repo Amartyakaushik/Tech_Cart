@@ -6,7 +6,7 @@ import '../../widget/themes.dart';
 import 'catalog_image.dart';
 
 class CatalogItem extends StatelessWidget {
-  final Item catalog;
+  final Item? catalog;
   const CatalogItem({super.key, required this.catalog});
 
   @override
@@ -14,19 +14,19 @@ class CatalogItem extends StatelessWidget {
     return VxBox(
         child: Row(
           children: [
-            CatalogImage(image : catalog.image),
+            CatalogImage(image : catalog!.image),
             Expanded(child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                catalog.name.text.lg.color(context.theme.colorScheme.secondary).bold.make(), // accent color
-                catalog.desc.text.textStyle(context.captionStyle).make(),
+                catalog!.name.text.lg.color(context.theme.colorScheme.secondary).bold.make(), // accent color
+                catalog!.desc.text.textStyle(context.captionStyle).make(),
                 28.heightBox,
                 ButtonBar(
                   alignment: MainAxisAlignment.spaceBetween,
                   buttonPadding: EdgeInsets.zero,
                   children: [
-                    "\$${catalog.price}".text.bold.xl.make(),
+                    "\$${catalog!.price}".text.bold.xl.make(),
                     ElevatedButton(
                       onPressed: (){},
                       style: ButtonStyle(

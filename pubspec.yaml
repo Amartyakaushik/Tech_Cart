@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   google_fonts: ^6.2.1
   velocity_x: ^4.1.2
+  path_provider: ^2.1.2  # path provider to encounter the issue of sdk xml version
 
 
 dev_dependencies:

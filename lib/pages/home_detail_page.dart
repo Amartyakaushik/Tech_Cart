@@ -5,7 +5,7 @@ import 'package:velocity_x/velocity_x.dart';
 import '../models/catalog.dart';
 
 class HomeDetailPage extends StatelessWidget {
-  final Item catalog;
+  final Item? catalog;
   const HomeDetailPage({super.key, required this.catalog});
 
   @override
@@ -24,7 +24,7 @@ class HomeDetailPage extends StatelessWidget {
           alignment: MainAxisAlignment.spaceBetween,
           buttonPadding: EdgeInsets.zero,
           children: [
-            "\$${catalog.price}".text.bold.xl2.red800.make(),
+            "\$${catalog?.price}".text.bold.xl2.red800.make(),
             ElevatedButton(
               onPressed: (){},
               style: ButtonStyle(
@@ -44,7 +44,7 @@ class HomeDetailPage extends StatelessWidget {
         child: Column(
           children: [
             Hero(
-                tag: Key(catalog.id.toString()),
+                tag: Key(catalog!.id.toString()),
                 child: Container(
                   color: context.canvasColor,
                   // decoration: BoxDecoration(
@@ -52,7 +52,7 @@ class HomeDetailPage extends StatelessWidget {
                     // backgroundBlendMode:
                   // ),
                   child: Image.network(
-                    catalog.image,
+                    catalog!.image,
                   fit: BoxFit.cover,
                   // color: Colors.white.withOpacity(0.9),
                   // colorBlendMode: BlendMode.multiply,
@@ -67,8 +67,8 @@ class HomeDetailPage extends StatelessWidget {
                       width: context.screenWidth, color: context.cardColor,
                       child: Column(
                         children: [
-                          catalog.name.text.lg.color(context.theme.colorScheme.secondary).bold.make(),
-                          catalog.desc.text.textStyle(context.captionStyle).xl.make(),
+                          catalog!.name.text.lg.color(context.theme.colorScheme.secondary).bold.make(),
+                          catalog!.desc.text.textStyle(context.captionStyle).xl.make(),
                           10.heightBox,
                           "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into .".text.textStyle(context.captionStyle).make().p16(),
                         ],
