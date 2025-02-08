@@ -1,11 +1,15 @@
 class CatalogModel{
   static List<Item>? items;
-  
-  // method to get item by id
-  static Item? getById(int id) => items?.firstWhere((element) => element == id, orElse: null);
-  // method to get item by position
-  static Item? getByPosition(int pos) => items?[pos];
 
+  // method to get item by id
+  Item? getById(int id) => items?.firstWhere((element) => element == id, orElse: null);
+  // method to get item by position
+  Item? getByPosition(int pos) => items?[pos];
+
+  // creating singleton class to encounter creation of new object(both in cart page and home page) each time when use try to add items to cart
+  static final catModel = CatalogModel._internal();
+  CatalogModel._internal();
+  factory CatalogModel() => catModel;
 }
 
 class Item {

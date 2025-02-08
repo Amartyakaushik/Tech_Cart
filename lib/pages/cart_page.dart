@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tech_cart/models/cartModel.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class CartPage extends StatelessWidget {
@@ -9,13 +10,13 @@ class CartPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: context.canvasColor,
       appBar: AppBar(
-        title: "Cart".text.xl2.color(context.theme.colorScheme.secondary).make().centered(),
+        title: "Cart".text.xl2.make().centered(),
         // iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: Colors.transparent,
       ),
       body: Column(
         children: [
-          _CartList().p32().expand(),
+          Expanded(child:  _CartList().p32().expand()),
           Divider(),
           _CartTotal(),
         ],
@@ -32,18 +33,28 @@ class _CartList extends StatefulWidget {
 }
 
 class _CartListState extends State<_CartList> {
+  final _cart = CartModel.cartModel; // to access properties of Cart
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        itemCount: 5,
-        itemBuilder: (context, index) =>
-          ListTile(
+    return _cart.items.isEmpty?"Cart is empty".text.xl5.make().centered()
+        : ListView.builder(
+        itemCount: _cart.items.length,   // return length of items added in the cart
+        itemBuilder: (context, index) {
+          final item = _cart.items[index];
+          if(item == null){
+            return Container();
+          }
+
+          return ListTile(
             leading: Icon(Icons.done),
             trailing: IconButton(
                 onPressed: ()=>{},
                 icon: Icon(Icons.remove_circle_outline)),
-            title: "Item 1".text.xl4.make(),
-          ));
+            title: item.name.text.xl4.make(),
+          );
+        }
+        );
+
   }
 }
 
@@ -52,12 +63,13 @@ class _CartTotal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _cart = CartModel();  // to access properties of Cart
     return SizedBox(
       height: 70,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          "\$9999".text.xl4.make(),
+          "\$${_cart.totalPrice}".text.xl4.make(),  // changes to reflect the price of total items added to the cart
 
           ElevatedButton(
             onPressed: (){

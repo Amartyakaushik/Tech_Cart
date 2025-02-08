@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tech_cart/widget/themes.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import '../models/catalog.dart';
+import '../models/catalogModel.dart';
 
 class HomeDetailPage extends StatelessWidget {
   final Item? catalog;

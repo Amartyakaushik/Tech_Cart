@@ -3,10 +3,8 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tech_cart/models/catalog.dart';
+import 'package:tech_cart/models/catalogModel.dart';
 import 'package:tech_cart/utils/MyRoutes.dart';
-// import 'package:tech_cart/widget/drawer.dart';
-import 'package:tech_cart/widget/themes.dart';
 
 // import '../widget/item_widget.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -32,7 +30,7 @@ class _HomePageState extends State<HomePage> {
   void loadData() async{  // async used because await is used with async function only
     await Future.delayed(Duration(seconds: 1));
     var catalogJson = await rootBundle.loadString("assets/files/updated_catalog.json"); // await used because catalogJson returns Future<String>
-    print("JSON Loaded: $catalogJson"); // for debuggins
+    // print("JSON Loaded: $catalogJson"); // for debuggins
     final decodeData = jsonDecode(catalogJson);  // to decode the object in the json file
     var productData = decodeData["products"];  // extract all the products
     CatalogModel.items = List.from(productData)
