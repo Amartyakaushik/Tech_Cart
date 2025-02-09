@@ -54,13 +54,35 @@ class _AddToCartState extends State<_AddToCart> {
   Widget build(BuildContext context) {
     return
       ElevatedButton(
-        onPressed: (){
-          isInCart = isInCart.toggle();
-          final _catalog = CatalogModel();
-          _cart.catalog = _catalog;
-          _cart.add(widget.catalog);
-          setState(() {});
-        },  // define action to add items to the cart when clicked
+        // onPressed: (){
+        //   isInCart = isInCart.toggle();
+        //   final _catalog = CatalogModel();
+        //   _cart.catalog = _catalog;
+        //   _cart.add(widget.catalog);
+        //   setState(() {});
+        // },  // define action to add items to the cart when clicked
+        onPressed: () {   // define action to add items to the cart when clicked
+          try {
+            isInCart = isInCart.toggle();
+            final catalog = CatalogModel();
+            _cart.catalog = catalog;
+            _cart.add(widget.catalog);
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text("Item added to cart"),
+                duration: Duration(seconds: 1),
+              ),
+            );
+            setState(() {});
+          } catch (e) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text("Error adding item to cart"),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+        },
         style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(
                 (context.theme.colorScheme.primary) // for button color
@@ -68,7 +90,9 @@ class _AddToCartState extends State<_AddToCart> {
             shape: MaterialStateProperty.all(
               StadiumBorder(),
             )),
-        child: isInCart? Icon(Icons.done, color: Colors.white,): "Add to cart".text.color(Colors.white).make(),
+        child: isInCart
+            ? Icon(Icons.done, color: Colors.white,)
+            : "Add to cart".text.color(Colors.white).make(),
       );
   }
 }

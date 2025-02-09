@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tech_cart/models/cartModel.dart';
 import 'package:tech_cart/models/catalogModel.dart';
 import 'package:tech_cart/utils/MyRoutes.dart';
 
@@ -25,6 +26,9 @@ class _HomePageState extends State<HomePage> {
     // To load the initial data 
     super.initState();
     loadData();
+    // one of the steps taked to encounter the cart page issue
+    final cart = CartModel.cartModel;
+    cart.catalog = CatalogModel();
   }
 
   void loadData() async{  // async used because await is used with async function only

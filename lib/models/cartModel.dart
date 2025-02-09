@@ -6,9 +6,9 @@ class CartModel{
   CartModel._internal();
   factory CartModel() => cartModel;
 
-  late CatalogModel _catalog; // Catalog field
-  CatalogModel get catalog => _catalog; // get catalog
+  CatalogModel? _catalog; // Catalog field
   final List<int> _itemIDs = []; // collection of IDs - stores ids of each item
+  CatalogModel get catalog => _catalog!; // get catalog
 
   set catalog(CatalogModel newCatalog){ // set catalog
     assert(newCatalog != null);
@@ -16,7 +16,20 @@ class CartModel{
 
   }
 
-  List<Item?> get items => _itemIDs.map((id) => _catalog.getById(id)).toList(); // Get items in the cart
+  // List<Item?> get items => _itemIDs.map((id) => _catalog!.getById(id)).toList(); // Get items in the cart
+  List<Item> get items {
+    return _itemIDs.map((id) {
+      return _catalog!.getById(id) ?? Item(
+          id: 0,
+          name: "Error",
+          desc: "Item not found",
+          price: 0,
+          color: "#000000",
+          image: "assets/images/keylogo.png"
+      );
+    }).toList();
+  }
+
   num get totalPrice =>  // get Total price
       items.fold(0, (total, current) => total + current!.price);
 

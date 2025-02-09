@@ -2,7 +2,14 @@ class CatalogModel{
   static List<Item>? items;
 
   // method to get item by id
-  Item? getById(int id) => items?.firstWhere((element) => element == id, orElse: null);
+  // Item? getById(int id) => items?.firstWhere((element) => element == id, orElse: null);
+  Item? getById(int id) {
+    try {
+      return items?.firstWhere((element) => element.id == id);
+    } catch (e) {
+      return null;
+    }
+  }
   // method to get item by position
   Item? getByPosition(int pos) => items?[pos];
 

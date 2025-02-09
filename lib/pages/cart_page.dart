@@ -36,7 +36,8 @@ class _CartListState extends State<_CartList> {
   final _cart = CartModel.cartModel; // to access properties of Cart
   @override
   Widget build(BuildContext context) {
-    return _cart.items.isEmpty?"Cart is empty".text.xl5.make().centered()
+    return _cart.items.isEmpty
+        ? "Cart is empty".text.xl5.make().centered()
         : ListView.builder(
         itemCount: _cart.items.length,   // return length of items added in the cart
         itemBuilder: (context, index) {
@@ -48,7 +49,10 @@ class _CartListState extends State<_CartList> {
           return ListTile(
             leading: Icon(Icons.done),
             trailing: IconButton(
-                onPressed: ()=>{},
+                onPressed: ()=>{
+                  _cart.remove(item),
+                  setState(() {}),
+                },
                 icon: Icon(Icons.remove_circle_outline)),
             title: item.name.text.xl4.make(),
           );
