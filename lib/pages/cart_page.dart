@@ -41,7 +41,7 @@ class _CartListState extends State<_CartList> {
         : ListView.builder(
         itemCount: _cart.items.length,   // return length of items added in the cart
         itemBuilder: (context, index) {
-          final item = _cart.items[index];
+          final item = _cart.items[index];  // storing items of particular index each time in the item var
           if(item == null){
             return Container();
           }
@@ -50,8 +50,10 @@ class _CartListState extends State<_CartList> {
             leading: Icon(Icons.done),
             trailing: IconButton(
                 onPressed: ()=>{
-                  _cart.remove(item),
-                  setState(() {}),
+                  setState(() {
+                    _cart.remove(item);
+                    _cart.totalPrice - item.price;
+                  }),
                 },
                 icon: Icon(Icons.remove_circle_outline)),
             title: item.name.text.xl4.make(),
