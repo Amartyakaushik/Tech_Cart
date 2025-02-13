@@ -27,7 +27,6 @@ class CartPage extends StatelessWidget {
 
 class _CartList extends StatefulWidget {
   const _CartList({super.key});
-//
   @override
   State<_CartList> createState() => _CartListState();
 }
@@ -46,17 +45,26 @@ class _CartListState extends State<_CartList> {
             return Container();
           }
 
-          return ListTile(
-            leading: Icon(Icons.done),
-            trailing: IconButton(
-                onPressed: ()=>{
-                  setState(() {
-                    _cart.remove(item);
-                    _cart.totalPrice - item.price;
-                  }),
-                },
-                icon: Icon(Icons.remove_circle_outline)),
-            title: item.name.text.xl4.make(),
+          // return ListTile(
+          //   leading: Icon(Icons.done),
+          //   trailing: IconButton(
+          //       onPressed: ()=>{
+          //         setState(() {
+          //           _cart.remove(item);
+          //           _cart.totalPrice - item.price;
+          //         }),
+          //       },
+          //       icon: Icon(Icons.remove_circle_outline)),
+          //   title: item.name.text.xl4.make(),
+          //   subtitle: item.desc.text.xl2.make(),
+          //
+          // );
+          VxBox(
+            child: Row(
+              children: [
+
+              ],
+            ),
           );
         }
         );
