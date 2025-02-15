@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tech_cart/models/cartModel.dart';
+import 'package:tech_cart/pages/homeWidget/catalog_image.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class CartPage extends StatelessWidget {
@@ -45,27 +47,87 @@ class _CartListState extends State<_CartList> {
             return Container();
           }
 
-          // return ListTile(
-          //   leading: Icon(Icons.done),
-          //   trailing: IconButton(
-          //       onPressed: ()=>{
-          //         setState(() {
-          //           _cart.remove(item);
-          //           _cart.totalPrice - item.price;
-          //         }),
-          //       },
-          //       icon: Icon(Icons.remove_circle_outline)),
-          //   title: item.name.text.xl4.make(),
-          //   subtitle: item.desc.text.xl2.make(),
-          //
-          // );
-          VxBox(
-            child: Row(
+          return Card(
+            margin: EdgeInsets.symmetric(vertical: 8),
+            child: Column(
               children: [
+                Column(
+                  children: [
+                    ListTile(
+                      leading: Image.network(
+                          item.image
+                      ).backgroundColor(Colors.transparent).h32(context),
+                      trailing: IconButton(
+                          onPressed: ()=>{},
+                          icon: Icon(Icons.done)
+                      ),
+                      title: item.name.text.xl2.make(),
+                      subtitle: item.desc.text.xl.make(),
 
+                    ),
+                  //   ElevatedButton(
+                  //     onPressed: (){
+                  //       setState(() {
+                  //         _cart.remove(item);
+                  //         _cart.totalPrice - item.price;
+                  //       });
+                  //     },
+                  //     style: ButtonStyle(
+                  //       backgroundColor: MaterialStateProperty.all(
+                  //         (context.theme.primaryColor)
+                  //       ),
+                  //       shape: MaterialStateProperty.all(
+                  //          StadiumBorder()
+                  //       )
+                  //     ),
+                  //     child: Container(
+                  //     child: Icon(CupertinoIcons.d),
+                  //     )
+                  //   //   child: Icon(
+                  //   //     Icons.delete,
+                  //   //     color: Colors.white,),
+                  //   // ).backgroundColor(context.theme.primaryColorLight),
+                  ],
+
+                ),
+                Row(
+                  children: [
+                    TextButton.icon(
+                        onPressed: (){
+                          setState(() {
+                            _cart.totalPrice - item.price;
+                          });
+                        },
+                        label: "Remove".text.color(context.theme.colorScheme.secondary).make())
+                  ],
+                )
               ],
             ),
           );
+
+          // VxBox(
+          //   child: Row(
+          //     children: [
+          //       CatalogImage(image: item.image),
+          //       Column(
+          //         children: [
+          //           Column(
+          //             children: [
+          //               item.name.text.color(Colors.white).make(),
+          //               item.desc.text.color(context.theme.primaryColor).make(),
+          //             ],
+          //           ),
+          //           Row(
+          //             children: [
+          //               Icon(Icons.delete)
+          //             ],
+          //           )
+          //         ],
+          //
+          //       )
+          //     ],
+          //   ),
+          // );
         }
         );
 
