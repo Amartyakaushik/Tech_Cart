@@ -7,34 +7,34 @@ import '../../widget/themes.dart';
 import 'addToCart.dart';
 import 'catalog_image.dart';
 
-class CatalogItem extends StatefulWidget {
+class CatalogItem extends StatelessWidget {
   final Item? catalog;
   const CatalogItem({super.key, required this.catalog});
 
-  @override
-  State<CatalogItem> createState() => _CatalogItemState();
-}
-
-class _CatalogItemState extends State<CatalogItem> {
+//   @override
+//   State<CatalogItem> createState() => _CatalogItemState();
+// }
+//
+// class _CatalogItemState extends State<CatalogItem> {
   @override
   Widget build(BuildContext context) {
     return VxBox(
         child: Row(
           children: [
-            CatalogImage(image : widget.catalog!.image),
+            CatalogImage(image : catalog!.image),
             Expanded(child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                widget.catalog!.name.text.lg.color(context.theme.colorScheme.secondary).bold.make(), // accent color
-                widget.catalog!.desc.text.textStyle(context.captionStyle).make(),
+                catalog!.name.text.lg.color(context.theme.colorScheme.secondary).bold.make(), // accent color
+                catalog!.desc.text.textStyle(context.captionStyle).make(),
                 28.heightBox,
                 ButtonBar(
                   alignment: MainAxisAlignment.spaceBetween,
                   buttonPadding: EdgeInsets.zero,
                   children: [
-                    "\$${widget.catalog!.price}".text.bold.xl.make(),
-                    AddToCart(catalog : widget.catalog!)
+                    "\$${catalog!.price}".text.bold.xl.make(),
+                    AddToCart(catalog : catalog!)
                   ],
                 ).pOnly(right: 10.0)
               ],

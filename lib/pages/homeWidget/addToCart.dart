@@ -1,23 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tech_cart/core/store.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../models/cartModel.dart';
 import '../../models/catalogModel.dart';
 
-class AddToCart extends StatefulWidget {
+class AddToCart extends StatelessWidget {
   final Item catalog;
   const AddToCart({super.key, required this.catalog});
+//   @override
+//   State<AddToCart> createState() => _AddToCartState();
+// }
 
-  @override
-  State<AddToCart> createState() => _AddToCartState();
-}
-
-class _AddToCartState extends State<AddToCart> {
-  final _cart = CartModel.cartModel; // Replace final _cart = CartModel(); with final _cart = CartModel.cartModel; to use singleton
+// class _AddToCartState extends State<AddToCart> {
+//   final _cart = CartModel.cartModel; // Replace final _cart = CartModel(); with final _cart = CartModel.cartModel; to use singleton
   @override
   Widget build(BuildContext context) {
-    bool isInCart = _cart.items.contains(widget.catalog) ?? false;
+    VxState.watch(context, on:[AddMutation,RemoveMutation]);
+    final CartModel _cart = (VxState.store as MyStore).cart;
+    bool isInCart = _cart.items.contains(catalog) ;
+    // bool isInCart = _cart.items.contains(catalog) ?? false;
     return
       ElevatedButton(
         // onPressed: (){
@@ -31,17 +34,18 @@ class _AddToCartState extends State<AddToCart> {
           if(!isInCart){
 
             try {
-              isInCart = isInCart.toggle();
-              final catalog = CatalogModel();
-              _cart.catalog = catalog;
-              _cart.add(widget.catalog);
+              // isInCart = isInCart.toggle();
+              // final catalog = CatalogModel();
+              // _cart.catalog = catalog;
+              // _cart.add(widget.catalog);
+              AddMutation(catalog);
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text("Item added to cart"),
                   duration: Duration(seconds: 1),
                 ),
               );
-              setState(() {});
+              // setState(() {});
             } catch (e) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
