@@ -1,12 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tech_cart/core/store.dart';
 import 'package:tech_cart/models/cartModel.dart';
-import 'package:tech_cart/pages/homeWidget/catalog_image.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-class CartPage extends StatelessWidget {
+class CartPage extends StatefulWidget {
   const CartPage({super.key});
 
+  @override
+  State<CartPage> createState() => _CartPageState();
+}
+
+class _CartPageState extends State<CartPage> {
+  final _cart = CartModel.cartModel;
+  void updateCart() {
+    setState(() {}); // ✅ Triggers UI update when cart changes
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,9 +27,9 @@ class CartPage extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Expanded(child:  _CartList().p32().expand()),
+          Expanded(child:  _CartList(cart: _cart, onCartUpdated: updateCart).p32().expand()), // ✅ Pass callback
           Divider(),
-          _CartTotal(),
+          _CartTotal(), // ✅ Pass cart instance
         ],
       ),
     );
@@ -28,80 +37,77 @@ class CartPage extends StatelessWidget {
 }
 
 class _CartList extends StatefulWidget {
-  const _CartList({super.key});
+  final CartModel cart;
+  final VoidCallback onCartUpdated;  // ✅ Callback to notify CartPage
+  const _CartList({super.key, required this.cart, required this.onCartUpdated});
   @override
   State<_CartList> createState() => _CartListState();
 }
 
 class _CartListState extends State<_CartList> {
-  final _cart = CartModel.cartModel; // to access properties of Cart
+  // final _cart = CartModel.cartModel; // to access properties of Cart
   @override
   Widget build(BuildContext context) {
-    return _cart.items.isEmpty
+    return widget.cart.items.isEmpty
         ? "Cart is empty".text.xl5.make().centered()
         : ListView.builder(
-        itemCount: _cart.items.length,   // return length of items added in the cart
+        itemCount: widget.cart.items.length,   // return length of items added in the cart
         itemBuilder: (context, index) {
-          final item = _cart.items[index];  // storing items of particular index each time in the item var
+          final item = widget.cart.items[index];  // storing items of particular index each time in the item var
           if(item == null){
             return Container();
           }
 
           return Card(
-            margin: EdgeInsets.symmetric(vertical: 8),
-            child: Column(
-              children: [
-                Column(
-                  children: [
-                    ListTile(
-                      leading: Image.network(
-                          item.image
-                      ).backgroundColor(Colors.transparent).h32(context),
-                      trailing: IconButton(
-                          onPressed: ()=>{},
-                          icon: Icon(Icons.done)
+            margin: EdgeInsets.symmetric(vertical: 12),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Column(
+                    children: [
+                      ListTile(
+                        leading: Image.network(
+                            item.image
+                        ).backgroundColor(Colors.transparent).h56(context),
+                        trailing: "\$${item.price}".text.xl.make(),
+                        title: item.name.text.xl2.make(),
+                        subtitle: item.desc.text.xl.make(),
+
                       ),
-                      title: item.name.text.xl2.make(),
-                      subtitle: item.desc.text.xl.make(),
+                    ],
 
-                    ),
-                  //   ElevatedButton(
-                  //     onPressed: (){
-                  //       setState(() {
-                  //         _cart.remove(item);
-                  //         _cart.totalPrice - item.price;
-                  //       });
-                  //     },
-                  //     style: ButtonStyle(
-                  //       backgroundColor: MaterialStateProperty.all(
-                  //         (context.theme.primaryColor)
-                  //       ),
-                  //       shape: MaterialStateProperty.all(
-                  //          StadiumBorder()
-                  //       )
-                  //     ),
-                  //     child: Container(
-                  //     child: Icon(CupertinoIcons.d),
-                  //     )
-                  //   //   child: Icon(
-                  //   //     Icons.delete,
-                  //   //     color: Colors.white,),
-                  //   // ).backgroundColor(context.theme.primaryColorLight),
-                  ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextButton.icon(
+                          onPressed: (){
+                            setState(() {
+                              RemoveMutation(widget.cart.items[index]);  // to remove the cart item form the page
+                              // widget.cart.remove(item);
+                              // _cart.totalPrice - item.price;
+                            });
+                            // widget.onCartUpdated();  // to reflect the dynamic change in the total price
+                          },
+                          label: "Remove".text.color(context.theme.colorScheme.secondary).make(),
+                          icon: Icon(CupertinoIcons.delete),
+                      ),
+                      TextButton.icon(
+                        onPressed: (){},
+                        label: "Save for later".text.color(context.theme.colorScheme.secondary).make(),
+                        icon: Icon(CupertinoIcons.bookmark),
+                      ),
+                      TextButton.icon(
+                        onPressed: (){},
+                        label: "Buy this now".text.color(context.theme.colorScheme.secondary).make(),
+                        icon: Icon(Icons.flash_on),
+                      ),
 
-                ),
-                Row(
-                  children: [
-                    TextButton.icon(
-                        onPressed: (){
-                          setState(() {
-                            _cart.totalPrice - item.price;
-                          });
-                        },
-                        label: "Remove".text.color(context.theme.colorScheme.secondary).make())
-                  ],
-                )
-              ],
+                    ],
+                  )
+                ],
+              ),
             ),
           );
 
@@ -135,17 +141,27 @@ class _CartListState extends State<_CartList> {
 }
 
 class _CartTotal extends StatelessWidget {
-  const _CartTotal({super.key});
-
+  // late final CartModel cart;
   @override
   Widget build(BuildContext context) {
-    final _cart = CartModel();  // to access properties of Cart
+    final _cart = (VxState.store as MyStore).cart;
+    // final _cart = CartModel.cartModel;  // to access properties of Cart
     return SizedBox(
       height: 70,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          "\$${_cart.totalPrice}".text.xl4.make(),  // changes to reflect the price of total items added to the cart
+          VxBuilder(
+            mutations: {RemoveMutation},
+            builder: (context, store, status) {  // ✅ Correct function signature
+              return "\$${_cart.totalPrice}"
+                  .text
+                  .xl5
+                  .color(context.accentColor)
+                  .make();
+            },
+          ),
+                  // .make();  // changes to reflect the price of total items added to the cart
 
           ElevatedButton(
             onPressed: (){
@@ -164,4 +180,9 @@ class _CartTotal extends StatelessWidget {
       ).px20(),
     );
   }
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  //   setState(() {}); // ✅ Triggers UI update when dependencies change
+  // }
 }
